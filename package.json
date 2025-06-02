@@ -21,10 +21,10 @@
     "preversion": "npm run update-versions && npm run update-dependencies && git add . && git commit -m 'chore: update package versions'"
   },
   "optionalDependencies": {
-    "@sqld/darwin-arm64": "0.24.1-pre.3",
-    "@sqld/darwin-x64": "0.24.1-pre.3",
-    "@sqld/linux-arm64": "0.24.1-pre.3",
-    "@sqld/linux-x64": "0.24.1-pre.3"
+    "@sqld/darwin-arm64": "0.24.1-pre.24",
+    "@sqld/darwin-x64": "0.24.1-pre.24",
+    "@sqld/linux-arm64": "0.24.1-pre.24",
+    "@sqld/linux-x64": "0.24.1-pre.24"
   },
   "engines": {
     "node": ">=18"
