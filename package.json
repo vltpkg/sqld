@@ -22,10 +22,10 @@
     "postrelease": "git add . && git commit -m 'chore: update versions' && git tag $version && git push && git push --tags"
   },
   "optionalDependencies": {
-    "@sqld/darwin-arm64": "0.24.1-pre.22",
-    "@sqld/darwin-x64": "0.24.1-pre.22",
-    "@sqld/linux-arm64": "0.24.1-pre.22",
-    "@sqld/linux-x64": "0.24.1-pre.22"
+    "@sqld/darwin-arm64": "0.24.1-pre.23",
+    "@sqld/darwin-x64": "0.24.1-pre.23",
+    "@sqld/linux-arm64": "0.24.1-pre.23",
+    "@sqld/linux-x64": "0.24.1-pre.23"
   },
   "engines": {
     "node": ">=18"
