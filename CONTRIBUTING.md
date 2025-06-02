@@ -1,5 +1,29 @@
 # Contributing
 
+## How It Works
+
+This project uses a simple platform-specific binary distribution approach:
+
+1. **Platform Detection**: The package manager automatically installs only the compatible platform package based on your OS and architecture
+2. **Direct Binary Access**: Each platform package directly provides the `sqld` binary through its `bin` field
+3. **No Wrapper**: No JavaScript wrapper or bootstrap code - the platform packages directly expose the native `sqld` binary
+
+### Automated Updates
+
+The project automatically checks for new `libsql-server` releases daily using GitHub Actions:
+
+1. **Daily Check**: Runs at 9 AM UTC to check for new releases from the [libsql GitHub repository](https://github.com/tursodatabase/libsql/releases?q=libsql-server-)
+2. **Binary Extraction**: Downloads platform-specific tarballs and extracts the `sqld` binaries
+3. **Testing**: Verifies that all binaries work correctly
+4. **Publishing**: Automatically publishes new versions to npm
+5. **Git Commit**: Commits the updated binaries to the repository
+
+The project uses the following release artifacts for each platform:
+- **macOS ARM64**: `libsql-server-aarch64-apple-darwin.tar.xz`
+- **macOS x64**: `libsql-server-x86_64-apple-darwin.tar.xz`
+- **Linux ARM64**: `libsql-server-aarch64-unknown-linux-gnu.tar.xz`
+- **Linux x64**: `libsql-server-x86_64-unknown-linux-gnu.tar.xz`
+
 ## Development
 
 ### Prerequisites
