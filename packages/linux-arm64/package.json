@@ -1,9 +1,16 @@
 {
   "name": "@sqld/linux-arm64",
-  "version": "0.0.0",
+  "version": "libsql-server-v0.24.32",
   "description": "libsql-server (sqld) binary for Linux ARM64",
-  "os": ["linux"],
-  "cpu": ["arm64"],
+  "bin": {
+    "sqld": "sqld"
+  },
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "arm64"
+  ],
   "files": [
     "sqld",
     "package.json"
@@ -23,4 +30,4 @@
   ],
   "author": "darcyclarke <darcy@darcyclarke.me>",
   "license": "MIT"
-} 
+}

@@ -3,50 +3,143 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const https = require('https');
 const { getLatestDockerTag } = require('./check-version.js');
 
 const PLATFORMS = [
-  { name: 'darwin-arm64', dockerPlatform: 'linux/arm64' },
-  { name: 'darwin-x64', dockerPlatform: 'linux/amd64' },
-  { name: 'linux-arm64', dockerPlatform: 'linux/arm64' },
-  { name: 'linux-x64', dockerPlatform: 'linux/amd64' }
+  { 
+    name: 'darwin-arm64', 
+    artifact: 'libsql-server-aarch64-apple-darwin.tar.xz'
+  },
+  { 
+    name: 'darwin-x64', 
+    artifact: 'libsql-server-x86_64-apple-darwin.tar.xz'
+  },
+  { 
+    name: 'linux-arm64', 
+    artifact: 'libsql-server-aarch64-unknown-linux-gnu.tar.xz'
+  },
+  { 
+    name: 'linux-x64', 
+    artifact: 'libsql-server-x86_64-unknown-linux-gnu.tar.xz'
+  }
 ];
 
+async function downloadFile(url, outputPath) {
+  return new Promise((resolve, reject) => {
+    const file = fs.createWriteStream(outputPath);
+    
+    https.get(url, (response) => {
+      if (response.statusCode === 302 || response.statusCode === 301) {
+        // Handle redirects
+        return downloadFile(response.headers.location, outputPath)
+          .then(resolve)
+          .catch(reject);
+      }
+      
+      if (response.statusCode !== 200) {
+        reject(new Error(`HTTP ${response.statusCode}: ${response.statusMessage}`));
+        return;
+      }
+      
+      response.pipe(file);
+      
+      file.on('finish', () => {
+        file.close();
+        resolve();
+      });
+      
+      file.on('error', (err) => {
+        fs.unlink(outputPath, () => {}); // Delete the file on error
+        reject(err);
+      });
+    }).on('error', (err) => {
+      reject(err);
+    });
+  });
+}
+
 async function extractBinary(platform, version) {
-  const { name, dockerPlatform } = platform;
+  const { name, artifact } = platform;
   const packageDir = path.join(__dirname, '..', 'packages', name);
   const binaryPath = path.join(packageDir, 'sqld');
   
   console.log(`Extracting binary for ${name}...`);
   
   try {
-    // Pull the specific platform image
-    const imageTag = `ghcr.io/tursodatabase/libsql-server:${version}`;
-    console.log(`Pulling ${imageTag} for ${dockerPlatform}...`);
-    execSync(`docker pull --platform ${dockerPlatform} ${imageTag}`, { stdio: 'inherit' });
+    // Download URL for the release artifact
+    const downloadUrl = `https://github.com/tursodatabase/libsql/releases/download/${version}/${artifact}`;
+    const tempDir = path.join(__dirname, '..', 'temp');
+    const tempArtifactPath = path.join(tempDir, artifact);
     
-    // Create a temporary container
-    const containerId = execSync(`docker create --platform ${dockerPlatform} ${imageTag}`, { encoding: 'utf8' }).trim();
-    
-    try {
-      // Copy the binary from the container
-      const tempBinaryPath = path.join(__dirname, '..', 'temp-sqld');
-      execSync(`docker cp ${containerId}:/bin/sqld ${tempBinaryPath}`);
-      
-      // Move to the correct package directory
-      if (fs.existsSync(binaryPath)) {
-        fs.unlinkSync(binaryPath);
-      }
-      fs.renameSync(tempBinaryPath, binaryPath);
-      
-      // Make executable
-      fs.chmodSync(binaryPath, 0o755);
-      
-      console.log(`✓ Extracted binary for ${name}`);
-    } finally {
-      // Clean up container
-      execSync(`docker rm ${containerId}`, { stdio: 'pipe' });
+    // Create temp directory if it doesn't exist
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true });
     }
+    
+    console.log(`  Downloading ${downloadUrl}...`);
+    await downloadFile(downloadUrl, tempArtifactPath);
+    
+    // Extract the tarball
+    console.log(`  Extracting ${artifact}...`);
+    execSync(`tar -xf "${tempArtifactPath}" -C "${tempDir}"`, { stdio: 'pipe' });
+    
+    // Find the sqld binary in the extracted files
+    // The binary should be in a directory named after the version
+    const extractedDir = path.join(tempDir, artifact.replace('.tar.xz', ''));
+    let sqldSourcePath;
+    
+    // Try different possible locations for the binary
+    const possiblePaths = [
+      path.join(extractedDir, 'sqld'),
+      path.join(extractedDir, 'bin', 'sqld'),
+      path.join(extractedDir, 'libsql-server', 'sqld'),
+      path.join(tempDir, 'sqld')
+    ];
+    
+    for (const possiblePath of possiblePaths) {
+      if (fs.existsSync(possiblePath)) {
+        sqldSourcePath = possiblePath;
+        break;
+      }
+    }
+    
+    // If not found in expected locations, search recursively
+    if (!sqldSourcePath) {
+      const findCommand = `find "${tempDir}" -name "sqld" -type f`;
+      try {
+        const result = execSync(findCommand, { encoding: 'utf8' });
+        const foundPaths = result.trim().split('\n').filter(p => p);
+        if (foundPaths.length > 0) {
+          sqldSourcePath = foundPaths[0];
+        }
+      } catch (error) {
+        // find command failed
+      }
+    }
+    
+    if (!sqldSourcePath || !fs.existsSync(sqldSourcePath)) {
+      throw new Error(`Could not find sqld binary in extracted archive for ${name}`);
+    }
+    
+    // Copy the binary to the package directory
+    if (fs.existsSync(binaryPath)) {
+      fs.unlinkSync(binaryPath);
+    }
+    fs.copyFileSync(sqldSourcePath, binaryPath);
+    
+    // Make executable
+    fs.chmodSync(binaryPath, 0o755);
+    
+    console.log(`✓ Extracted binary for ${name}`);
+    
+    // Clean up temp files
+    try {
+      fs.rmSync(tempDir, { recursive: true, force: true });
+    } catch (error) {
+      console.warn(`Warning: Could not clean up temp directory: ${error.message}`);
+    }
+    
   } catch (error) {
     console.error(`✗ Failed to extract binary for ${name}:`, error.message);
     throw error;
@@ -63,7 +156,9 @@ async function updatePackageVersions(version) {
   
   // Update optional dependencies versions
   for (const platform of PLATFORMS) {
-    rootPackage.optionalDependencies[`@sqld/${platform.name}`] = version;
+    if (rootPackage.optionalDependencies) {
+      rootPackage.optionalDependencies[`@sqld/${platform.name}`] = version;
+    }
   }
   
   fs.writeFileSync(rootPackagePath, JSON.stringify(rootPackage, null, 2) + '\n');
