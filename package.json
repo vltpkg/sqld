@@ -8,8 +8,8 @@
     "extract-binaries": "node scripts/extract-binaries.js",
     "publish-all": "node scripts/publish-all.js",
     "test": "node scripts/test.js",
-    "preversion": "env && exit 1",
-    "version": "git add -A .",
+    "preversion": "V=$npm_new_version && npm pkg set optionalDependencies[@sqld/darwin-arm64]=$V && npm pkg set optionalDependencies[@sqld/darwin-x64]=$V && npm pkg set optionalDependencies[@sqld/linux-arm64]=$V && npm pkg set optionalDependencies[@sqld/linux-x64]=$V",
+    "version": "npm version --ws $npm_new_version && git add -A . && git commit -m 'chore: update version'",
     "postversion": "git push && git push --tags"
   },
   "optionalDependencies": {

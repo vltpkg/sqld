@@ -48,9 +48,6 @@ npm run build
 npm run test
 ```
 
-    // "preversion": "V=$npm_package_version && npm pkg set optionalDependencies[@sqld/darwin-arm64]=$V && npm pkg set optionalDependencies[@sqld/darwin-x64]=$V && npm pkg set optionalDependencies[@sqld/linux-arm64]=$V && npm pkg set optionalDependencies[@sqld/linux-x64]=$V",
-
-
 ### Versioning
 
 Set the versions across all packages & update the root's dependency specs
