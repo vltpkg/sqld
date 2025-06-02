@@ -34,6 +34,7 @@
   "workspaces": [
     "packages/*"
   ],
+  "homepage": "https://github.com/vltpkg/sqld",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vltpkg/sqld.git"
