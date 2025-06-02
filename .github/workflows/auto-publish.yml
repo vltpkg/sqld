@@ -2,8 +2,7 @@ name: Auto-publish libsql-server updates
 
 on:
   schedule:
-    # Run daily at 9 AM UTC
-    - cron: '0 9 * * *'
+    - cron: '0 9 * * *' # Run daily at 9 AM UTC
   workflow_dispatch: # Allow manual triggering
   push:
     branches: [main]
@@ -82,4 +81,4 @@ jobs:
             - Linux ARM64 (@sqld/linux-arm64)
             - Linux x64 (@sqld/linux-x64)
           draft: false
-          prerelease: false 
+          prerelease: false
