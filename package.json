@@ -19,7 +19,7 @@
     "update-packages": "npm run version-darwin-arm64 && npm run version-darwin-x64 && npm run version-linux-arm64 && npm run version-linux-x64",
     "update-dependencies": "npm run dep-darwin-arm64 && npm run dep-darwin-x64 && npm run dep-linux-arm64 && npm run dep-linux-x64",
     "release": "npm run update-packages && npm run update-dependencies",
-    "postrelease": "git add . && git commit -m 'chore: update versions' && git tag $version && git push && git push --tags"
+    "postrelease": "git add . && git commit -m 'chore: update versions' && git tag -a $version -m $version && git push && git push --tags"
   },
   "optionalDependencies": {
     "@sqld/darwin-arm64": "0.24.1-pre.23",
