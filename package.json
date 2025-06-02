@@ -23,10 +23,10 @@
     "postrelease": "npm version $v && git push && git push --tags"
   },
   "optionalDependencies": {
-    "@sqld/darwin-arm64": "0.24.1-pre.29",
-    "@sqld/darwin-x64": "0.24.1-pre.29",
-    "@sqld/linux-arm64": "0.24.1-pre.29",
-    "@sqld/linux-x64": "0.24.1-pre.29"
+    "@sqld/darwin-arm64": "0.24.1-pre.30",
+    "@sqld/darwin-x64": "0.24.1-pre.30",
+    "@sqld/linux-arm64": "0.24.1-pre.30",
+    "@sqld/linux-x64": "0.24.1-pre.30"
   },
   "engines": {
     "node": ">=18"
