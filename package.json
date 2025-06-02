@@ -1,6 +1,6 @@
 {
   "name": "sqld",
-  "version": "0.24.1-pre.13",
+  "version": "0.24.1-pre.14",
   "description": "A Node.js wrapper for libsql-server (sqld) with platform-specific binaries",
   "scripts": {
     "build": "node scripts/build.js",
@@ -8,7 +8,17 @@
     "extract-binaries": "node scripts/extract-binaries.js",
     "publish-all": "node scripts/publish-all.js",
     "test": "node scripts/test.js",
-    "preversion": "V=$npm_new_version && npm pkg set optionalDependencies[@sqld/darwin-arm64]=$V && npm pkg set optionalDependencies[@sqld/darwin-x64]=$V && npm pkg set optionalDependencies[@sqld/linux-arm64]=$V && npm pkg set optionalDependencies[@sqld/linux-x64]=$V",
+    "version-darwin-arm64": "npm version -w @sqld/darwin-arm64 $npm_new_version --os=darwin --cpu=arm64",
+    "version-darwin-x64": "npm version -w @sqld/darwin-x64 $npm_new_version --os=darwin --cpu=x64",
+    "version-linux-arm64": "npm version -w @sqld/linux-arm64 $npm_new_version --os=linux --cpu=arm64",
+    "version-linux-x64": "npm version -w @sqld/linux-x64 $npm_new_version --os=linux --cpu=x64",
+    "dep-darwin-arm64": "npm pkg set optionalDependencies[@sqld/darwin-arm64]=$npm_new_version",
+    "dep-darwin-x64": "npm pkg set optionalDependencies[@sqld/darwin-x64]=$npm_new_version",
+    "dep-linux-arm64": "npm pkg set optionalDependencies[@sqld/linux-arm64]=$npm_new_version",
+    "dep-linux-x64": "npm pkg set optionalDependencies[@sqld/linux-x64]=$npm_new_version",
+    "update-versions": "npm run version-darwin-arm64 && npm run version-darwin-x64 && npm run version-linux-arm64 && npm run version-linux-x64",
+    "update-dependencies": "npm run dep-darwin-arm64 && npm run dep-darwin-x64 && npm run dep-linux-arm64 && npm run dep-linux-x64",
+    "preversion": "npm run update-versions && npm run update-dependencies",
     "version": "npm version --ws $npm_new_version && git add . && git commit -m 'chore: update version'",
     "postversion": "git push && git push --tags"
   },
