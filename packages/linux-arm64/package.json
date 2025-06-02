@@ -1,6 +1,6 @@
 {
   "name": "@sqld/linux-arm64",
-  "version": "0.24.1-pre.3",
+  "version": "0.24.1-pre.5",
   "description": "libsql-server (sqld) binary for Linux ARM64",
   "bin": {
     "sqld": "sqld"
