@@ -48,22 +48,20 @@ npm run build
 npm run test
 ```
 
-### Versioning
+### Manually Versioning
 
 Set the versions across all packages & update the root's dependency specs
 
 ```bash
-$ npm version --ws --iwr 0.24.1-pre.2
+$ v=<version> npm run release
 ```
 
-> Note: `npm` will error because of the optional deps `"os"` & `"cpu"` definitions. You can safely ignore this error as the operation will still successfully update the `package.json
-
-### Publishing
+### Manually Publishing
 
 Setting a `--tag` may not be desired depending on if its a prerelease
 
 ```bash
-$ npm publish --ws --iwr --tag latest --access public
+$ npm publish --force --ws --iwr --tag latest --access public
 ```
 
 ### GitHub Actions

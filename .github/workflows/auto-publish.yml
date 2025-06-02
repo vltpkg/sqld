@@ -54,10 +54,10 @@ jobs:
           git add packages/*/sqld packages/*/package.json package.json
           git commit -m "Update to latest libsql-server release" || exit 0
           git push
-        
+
       - name: Publish to npm
         if: steps.check-version.outputs.new-version == 'true'
-        run: npm publish --ws --iwr --tag latest --access public
+        run: npm publish --force --ws --iwr --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
