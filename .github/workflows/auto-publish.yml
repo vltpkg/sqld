@@ -43,11 +43,18 @@ jobs:
         if: steps.check-version.outputs.new-version == 'true'
         run: node scripts/test.js
         
+      - name: Get version
+        if: steps.check-version.outputs.new-version == 'true'
+        id: get-version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+        
       - name: Commit updated binaries
         if: steps.check-version.outputs.new-version == 'true'
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.email "ops@vlt.sh"
+          git config --local user.name "vltops"
           git add packages/*/sqld packages/*/package.json package.json
           git commit -m "Update to latest libsql-server release" || exit 0
           git push
