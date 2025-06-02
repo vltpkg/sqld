@@ -2,7 +2,6 @@
   "name": "@sqld/linux-x64",
   "version": "0.0.0",
   "description": "libsql-server (sqld) binary for Linux x64",
-  "main": "index.js",
   "os": ["linux"],
   "cpu": ["x64"],
   "files": [
@@ -11,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/sqld.git"
+    "url": "git+https://github.com/vltpkg/sqld.git"
   },
   "keywords": [
     "libsql",

@@ -1,23 +1,18 @@
 {
   "name": "sqld",
-  "version": "0.0.0",
+  "version": "0.0.0-pre.0",
   "description": "A wrapper for libsql-server (sqld) with platform-specific binaries",
-  "main": "lib/index.js",
   "scripts": {
     "build": "node scripts/build.js",
     "check-version": "node scripts/check-version.js",
     "extract-binaries": "node scripts/extract-binaries.js",
-    "publish-all": "node scripts/publish-all.js",
-    "test": "node scripts/test.js"
+    "publish-all": "node scripts/publish-all.js"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "optionalDependencies": {
-    "@sqld/darwin-arm64": "0.0.0",
-    "@sqld/darwin-x64": "0.0.0",
-    "@sqld/linux-arm64": "0.0.0",
-    "@sqld/linux-x64": "0.0.0"
+    "@sqld/darwin-arm64": "workspace:*",
+    "@sqld/darwin-x64": "workspace:*",
+    "@sqld/linux-arm64": "workspace:*",
+    "@sqld/linux-x64": "workspace:*"
   },
   "devDependencies": {
     "tar": "^7.4.3"
@@ -27,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/sqld.git"
+    "url": "git+https://github.com/vltpkg/sqld.git"
   },
   "keywords": [
     "libsql",

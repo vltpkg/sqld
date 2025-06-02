@@ -2,7 +2,6 @@
   "name": "@sqld/linux-arm64",
   "version": "0.0.0",
   "description": "libsql-server (sqld) binary for Linux ARM64",
-  "main": "index.js",
   "os": ["linux"],
   "cpu": ["arm64"],
   "files": [
@@ -11,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/sqld.git"
+    "url": "git+https://github.com/vltpkg/sqld.git"
   },
   "keywords": [
     "libsql",
