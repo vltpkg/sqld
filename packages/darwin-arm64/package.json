@@ -1,0 +1,27 @@
+{
+  "name": "@sqld/darwin-arm64",
+  "version": "0.0.0",
+  "description": "libsql-server (sqld) binary for macOS ARM64",
+  "main": "index.js",
+  "os": ["darwin"],
+  "cpu": ["arm64"],
+  "files": [
+    "sqld",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/sqld.git"
+  },
+  "keywords": [
+    "libsql",
+    "sqlite",
+    "database",
+    "sqld",
+    "turso",
+    "darwin",
+    "arm64"
+  ],
+  "author": "darcyclarke <darcy@darcyclarke.me>",
+  "license": "MIT"
+} 

@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+const { exec } = require('../lib/index.js');
+
+try {
+  const child = exec(process.argv.slice(2), {
+    stdio: 'inherit'
+  });
+  
+  child.on('exit', (code) => {
+    process.exit(code || 0);
+  });
+  
+  child.on('error', (error) => {
+    console.error('Error executing sqld:', error.message);
+    process.exit(1);
+  });
+} catch (error) {
+  console.error('Error:', error.message);
+  console.error('Make sure the appropriate platform-specific sqld package is installed.');
+  process.exit(1);
+} 

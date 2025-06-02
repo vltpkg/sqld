@@ -1,0 +1,27 @@
+{
+  "name": "@sqld/linux-arm64",
+  "version": "0.0.0",
+  "description": "libsql-server (sqld) binary for Linux ARM64",
+  "main": "index.js",
+  "os": ["linux"],
+  "cpu": ["arm64"],
+  "files": [
+    "sqld",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/sqld.git"
+  },
+  "keywords": [
+    "libsql",
+    "sqlite",
+    "database",
+    "sqld",
+    "turso",
+    "linux",
+    "arm64"
+  ],
+  "author": "darcyclarke <darcy@darcyclarke.me>",
+  "license": "MIT"
+} 

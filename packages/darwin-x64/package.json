@@ -1,0 +1,27 @@
+{
+  "name": "@sqld/darwin-x64",
+  "version": "0.0.0",
+  "description": "libsql-server (sqld) binary for macOS x64",
+  "main": "index.js",
+  "os": ["darwin"],
+  "cpu": ["x64"],
+  "files": [
+    "sqld",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/sqld.git"
+  },
+  "keywords": [
+    "libsql",
+    "sqlite",
+    "database",
+    "sqld",
+    "turso",
+    "darwin",
+    "x64"
+  ],
+  "author": "darcyclarke <darcy@darcyclarke.me>",
+  "license": "MIT"
+} 

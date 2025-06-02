@@ -1,0 +1,84 @@
+name: Auto-publish libsql-server updates
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual triggering
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - '.github/workflows/**'
+
+jobs:
+  check-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+          
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Check for new version
+        id: check-version
+        run: |
+          if node scripts/check-version.js; then
+            echo "new-version=true" >> $GITHUB_OUTPUT
+          else
+            echo "new-version=false" >> $GITHUB_OUTPUT
+          fi
+        continue-on-error: true
+        
+      - name: Extract binaries
+        if: steps.check-version.outputs.new-version == 'true'
+        run: node scripts/extract-binaries.js
+        
+      - name: Test binaries
+        if: steps.check-version.outputs.new-version == 'true'
+        run: node scripts/test.js
+        
+      - name: Commit updated binaries
+        if: steps.check-version.outputs.new-version == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add packages/*/sqld packages/*/package.json package.json
+          git commit -m "Update to latest libsql-server release" || exit 0
+          git push
+        
+      - name: Publish to npm
+        if: steps.check-version.outputs.new-version == 'true'
+        run: node scripts/publish-all.js
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Create GitHub Release
+        if: steps.check-version.outputs.new-version == 'true'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get-version.outputs.version }}
+          release_name: Release ${{ steps.get-version.outputs.version }}
+          body: |
+            Automated release of libsql-server ${{ steps.get-version.outputs.version }}
+            
+            This release includes platform-specific binaries for:
+            - macOS ARM64 (@sqld/darwin-arm64)
+            - macOS x64 (@sqld/darwin-x64) 
+            - Linux ARM64 (@sqld/linux-arm64)
+            - Linux x64 (@sqld/linux-x64)
+          draft: false
+          prerelease: false 

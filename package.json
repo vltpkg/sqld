@@ -1,0 +1,41 @@
+{
+  "name": "sqld",
+  "version": "0.0.0",
+  "description": "A wrapper for libsql-server (sqld) with platform-specific binaries",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "check-version": "node scripts/check-version.js",
+    "extract-binaries": "node scripts/extract-binaries.js",
+    "publish-all": "node scripts/publish-all.js",
+    "test": "node scripts/test.js"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "optionalDependencies": {
+    "@sqld/darwin-arm64": "0.0.0",
+    "@sqld/darwin-x64": "0.0.0",
+    "@sqld/linux-arm64": "0.0.0",
+    "@sqld/linux-x64": "0.0.0"
+  },
+  "devDependencies": {
+    "tar": "^7.4.3"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/sqld.git"
+  },
+  "keywords": [
+    "libsql",
+    "sqlite",
+    "database",
+    "sqld",
+    "turso"
+  ],
+  "author": "darcyclarke <darcy@darcyclarke.me>",
+  "license": "MIT"
+}

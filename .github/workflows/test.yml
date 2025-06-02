@@ -1,0 +1,45 @@
+name: Test Build Process
+
+on:
+  workflow_dispatch: # Manual trigger only
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Install dependencies
+        run: npm install
+        
+      - name: Check for new version
+        run: node scripts/check-version.js
+        continue-on-error: true
+        
+      - name: Extract binaries (test)
+        run: node scripts/extract-binaries.js
+        
+      - name: Test binaries
+        run: node scripts/test.js
+        
+      - name: Verify package structure
+        run: |
+          echo "Checking package structure..."
+          ls -la packages/*/
+          echo "Checking binary sizes..."
+          du -h packages/*/sqld
+          echo "Checking package.json versions..."
+          cat package.json | grep version
+          cat packages/*/package.json | grep version 

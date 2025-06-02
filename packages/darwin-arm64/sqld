@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "sqld mock binary - version 0.24.32"
+echo "Usage: sqld [OPTIONS]"
+echo "Options:"
+echo "  --help     Show this help message"
