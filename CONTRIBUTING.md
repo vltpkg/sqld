@@ -27,6 +27,22 @@ npm run test
 npm run publish-all
 ```
 
+### Versioning
+
+Set the versions across all packages & update the root's dependency specs
+
+```bash
+$ npm run version --ws --iwr 0.24.1-pre.2
+```
+
+### Publishing
+
+Setting a `--tag` may not be desired depending on if its a prerelease
+
+```bash
+$ npm publish --ws --iwr --tag latest --access public
+```
+
 ### GitHub Actions
 
 Two workflows are included:
