@@ -1,6 +1,6 @@
 {
   "name": "@sqld/darwin-arm64",
-  "version": "0.24.1-pre.23",
+  "version": "0.24.1-pre.24",
   "description": "libsql-server (sqld) binary for macOS ARM64",
   "bin": {
     "sqld": "sqld"
