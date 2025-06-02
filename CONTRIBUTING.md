@@ -46,9 +46,6 @@ npm run build
 
 # Test all binaries
 npm run test
-
-# Publish all packages to npm
-npm run publish-all
 ```
 
 ### Versioning
@@ -56,7 +53,7 @@ npm run publish-all
 Set the versions across all packages & update the root's dependency specs
 
 ```bash
-$ npm run version --ws --iwr 0.24.1-pre.2
+$ npm version --ws --iwr 0.24.1-pre.2
 ```
 
 > Note: `npm` will error because of the optional deps `"os"` & `"cpu"` definitions. You can safely ignore this error as the operation will still successfully update the `package.json

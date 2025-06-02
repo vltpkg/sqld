@@ -57,7 +57,7 @@ jobs:
         
       - name: Publish to npm
         if: steps.check-version.outputs.new-version == 'true'
-        run: node scripts/publish-all.js
+        run: npm publish --ws --iwr --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           

@@ -33,7 +33,7 @@ async function getLatestDockerTag() {
 
 async function getCurrentNpmVersion() {
   try {
-    const result = execSync('npm view sqld version', { encoding: 'utf8' });
+    const result = execSync('npm view sqld@latest version', { encoding: 'utf8' });
     return result.trim();
   } catch (error) {
     // Package doesn't exist yet
