@@ -24,9 +24,6 @@ jobs:
         with:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
-          
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
         
       - name: Install dependencies
         run: npm install
@@ -60,7 +57,7 @@ jobs:
         
       - name: Publish to npm
         if: steps.check-version.outputs.new-version == 'true'
-        run: node scripts/publish-all.js
+        run: npm publish --ws --iwr --tag latest --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
