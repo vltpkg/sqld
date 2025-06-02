@@ -1,47 +1,30 @@
 # Contributing
 
-## Development 
+## Development
 
 ### Prerequisites
 
 - Node.js 18+
-- `vlt` (`npm i -g vlt`)
+- `tar` command (available on macOS/Linux by default)
+- npm account with publishing permissions
 
 ### Scripts
 
 ```bash
 # Check for new versions
-vlr check-version
+npm run check-version
 
-# Extract binaries from Docker containers
-vlr extract-binaries
+# Extract binaries from GitHub releases
+npm run extract-binaries
 
 # Build everything (check + extract)
-vlr build
+npm run build
 
 # Test all binaries
-clr test
+npm run test
 
 # Publish all packages to npm
-vlr publish-all
-```
-
-### Manual Testing
-
-You can test the build process manually:
-
-```bash
-# Install dependencies
-vlt install
-
-# Extract the latest binaries
-vlr extract-binaries
-
-# Test that everything works
-vlr test
-
-# Test the CLI
-./bin/sqld --help
+npm run publish-all
 ```
 
 ### GitHub Actions
@@ -54,24 +37,3 @@ Two workflows are included:
 To set up automated publishing, add these secrets to your GitHub repository:
 
 - `NPM_TOKEN`: Your npm authentication token with publish permissions
-
-## Project Structure
-
-```
-sqld/
-├── package.json              # Main package configuration
-├── lib/index.js              # Node.js API
-├── bin/sqld                  # CLI wrapper
-├── scripts/
-│   ├── check-version.js      # Check for new releases
-│   ├── extract-binaries.js   # Extract binaries from Docker
-│   ├── build.js              # Build orchestration
-│   ├── publish-all.js        # Publish all packages
-│   └── test.js               # Test all binaries
-├── packages/
-│   ├── darwin-arm64/         # macOS ARM64 package
-│   ├── darwin-x64/           # macOS x64 package
-│   ├── linux-arm64/          # Linux ARM64 package
-│   └── linux-x64/            # Linux x64 package
-└── .github/workflows/        # GitHub Actions
-```

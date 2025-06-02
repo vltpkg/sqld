@@ -1,6 +1,6 @@
 {
   "name": "@sqld/linux-x64",
-  "version": "libsql-server-v0.24.32",
+  "version": "0.24.1-pre.0",
   "description": "libsql-server (sqld) binary for Linux x64",
   "bin": {
     "sqld": "sqld"
