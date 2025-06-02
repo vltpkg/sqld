@@ -1,30 +1,27 @@
 {
   "name": "sqld",
-  "version": "0.0.0",
-  "description": "A wrapper for libsql-server (sqld) with platform-specific binaries",
-  "main": "lib/index.js",
+  "version": "0.24.1-pre.2",
+  "description": "A Node.js wrapper for libsql-server (sqld) with platform-specific binaries",
   "scripts": {
     "build": "node scripts/build.js",
     "check-version": "node scripts/check-version.js",
     "extract-binaries": "node scripts/extract-binaries.js",
     "publish-all": "node scripts/publish-all.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "postversion": "V=$(npm pkg get version | xargs) && npm pkg set optionalDependencies[@sqld/darwin-arm64]=$V && npm pkg set optionalDependencies[@sqld/darwin-x64]=$V && npm pkg set optionalDependencies[@sqld/linux-arm64]=$V && npm pkg set optionalDependencies[@sqld/linux-x64]=$V"
   },
-  "workspaces": [
-    "packages/*"
-  ],
   "optionalDependencies": {
-    "@sqld/darwin-arm64": "0.0.0",
-    "@sqld/darwin-x64": "0.0.0",
-    "@sqld/linux-arm64": "0.0.0",
-    "@sqld/linux-x64": "0.0.0"
-  },
-  "devDependencies": {
-    "tar": "^7.4.3"
+    "@sqld/darwin-arm64": "0.24.1-pre.2",
+    "@sqld/darwin-x64": "0.24.1-pre.2",
+    "@sqld/linux-arm64": "0.24.1-pre.2",
+    "@sqld/linux-x64": "0.24.1-pre.2"
   },
   "engines": {
     "node": ">=18"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/your-username/sqld.git"
