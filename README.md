@@ -7,8 +7,21 @@ This package automatically downloads and publishes the latest `libsql-server` re
 ## Installation
 
 ```bash
+# Locally install in a project
 vlt install sqld
 ```
+
+## Usage
+
+```bash
+# Start sqld server
+vlx sqld --help
+
+# Example: Start with a database file
+vlx sqld --db-path ./my-database.db
+```
+
+### Binaries
 
 The appropriate platform-specific binary will be automatically installed based on your system:
 
@@ -27,20 +40,6 @@ Windows is not directly supported as `libsql-server` does not provide native Win
 4. **Install sqld** within WSL: `vlt install sqld`
 
 The Linux ARM64 or x64 binary (depending on your system architecture) will be used within the WSL environment.
-
-## Usage
-
-### Command Line
-
-After installation, you can use `sqld` directly from the command line:
-
-```bash
-# Start sqld server
-vlx sqld --help
-
-# Example: Start with a database file
-vlx sqld --db-path ./my-database.db
-```
 
 ## License
 
