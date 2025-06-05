@@ -148,3 +148,5 @@ Thumbs.db
 temp-sqld 
 
 package-lock.json
+
+data.sqld/
