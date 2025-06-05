@@ -4,5 +4,5 @@ contributing.md
 packages/
 scripts/
 .github/
-data.sqld/
-.bin/
+data.sqld
+.bin
