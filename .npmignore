@@ -5,3 +5,4 @@ packages/
 scripts/
 .github/
 data.sqld/
+.bin/
