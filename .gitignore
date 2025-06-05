@@ -149,4 +149,5 @@ temp-sqld
 
 package-lock.json
 
-data.sqld/
+data.sqld
+

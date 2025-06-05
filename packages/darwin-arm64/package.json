@@ -5,6 +5,9 @@
   "bin": {
     "sqld": "sqld"
   },
+  "scripts": {
+    "postinstall": "bash postinstall.sh"
+  },
   "os": [
     "darwin"
   ],
@@ -13,6 +16,7 @@
   ],
   "files": [
     "sqld",
+    "postinstall.sh",
     "package.json"
   ],
   "repository": {
