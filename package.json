@@ -1,6 +1,6 @@
 {
   "name": "sqld",
-  "version": "0.24.1-pre.38",
+  "version": "0.24.1-pre.40",
   "description": "A Node.js wrapper for libsql-server (sqld) with platform-specific binaries",
   "bin": {
     "sqld": ".bin/sqld"
